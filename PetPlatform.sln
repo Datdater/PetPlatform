@@ -1,14 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{78B88A3F-B771-494F-BE0F-91E2194D8BE4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{A964BA5C-575D-45E7-816F-3ECF7BC41294}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{DAC60EAB-44E4-491E-B240-03E85B948CE8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{79B0C425-ED81-4A94-8684-1F9CDBB95F1F}"
@@ -35,6 +29,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Store", "Store", "{4FA584F9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{25C437E6-23D7-4994-A698-598CA2C1BFB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ocelot.APIGateway", "APIGateway\Ocelot.APIGateway\Ocelot.APIGateway.csproj", "{B8806E42-382B-4C65-94EC-AB95B5842D91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateway", "APIGateway", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +55,10 @@ Global
 		{64D5779F-C759-4199-AC66-C12242CDBF0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64D5779F-C759-4199-AC66-C12242CDBF0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64D5779F-C759-4199-AC66-C12242CDBF0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8806E42-382B-4C65-94EC-AB95B5842D91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8806E42-382B-4C65-94EC-AB95B5842D91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8806E42-382B-4C65-94EC-AB95B5842D91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8806E42-382B-4C65-94EC-AB95B5842D91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +76,7 @@ Global
 		{B08E0990-876E-4E81-91C7-EC7C9E69D59E} = {DAC60EAB-44E4-491E-B240-03E85B948CE8}
 		{4FA584F9-6952-4402-B02E-F0C6BB84C15A} = {DAC60EAB-44E4-491E-B240-03E85B948CE8}
 		{25C437E6-23D7-4994-A698-598CA2C1BFB3} = {DAC60EAB-44E4-491E-B240-03E85B948CE8}
+		{B8806E42-382B-4C65-94EC-AB95B5842D91} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C92839D-9E48-4880-A95E-581ED72F7400}

@@ -1,6 +1,0 @@
-@PetPlatform.Product.API_HostAddress = http://localhost:5240
-
-GET {{PetPlatform.Product.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
