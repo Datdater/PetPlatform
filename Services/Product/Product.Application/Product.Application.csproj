@@ -10,4 +10,17 @@
     <ProjectReference Include="..\Product.Domain\Product.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Feature\Commands\DeleteProduct\" />
+    <Folder Include="Feature\Commands\UpdateProduct\" />
+    <Folder Include="Feature\DTOs\" />
+    <Folder Include="Feature\Queries\GetAllProduct\" />
+    <Folder Include="Feature\Queries\GetProductDetail\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
+  </ItemGroup>
+
 </Project>

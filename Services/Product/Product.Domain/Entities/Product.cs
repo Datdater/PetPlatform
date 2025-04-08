@@ -12,8 +12,8 @@ namespace Product.Domain.Entities
     public class Product
     {
         [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         [BsonElement("name")]
         public string Name { get; set; }
@@ -24,17 +24,13 @@ namespace Product.Domain.Entities
         [BsonElement("isActive")]
         public bool IsActive { get; set; } = true;
 
-        [BsonElement("brandId")]
-        [BsonRepresentation(BsonType.String)]
-        public Guid BrandId { get; set; }
-
         [BsonElement("storeId")]
         [BsonRepresentation(BsonType.String)]
         public Guid StoreId { get; set; }
 
         [BsonElement("categoryId")]
         [BsonRepresentation(BsonType.String)]
-        public Guid CategoryId { get; set; }
+        public string CategoryId { get; set; }
 
         [BsonElement("basePrice")]
         public decimal BasePrice { get; set; }

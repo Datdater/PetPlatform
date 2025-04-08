@@ -16,12 +16,10 @@ namespace Product.Infrastructure.Data
             _database = client.GetDatabase(databaseName);
 
             Products = _database.GetCollection<Domain.Entities.Product>("Products");
-            ProductImages = _database.GetCollection<Domain.Entities.ProductImage>("ProductImage");
+            VariantCombinations = _database.GetCollection<Domain.Entities.VariantCombination>("VariantCombinations");
         }
 
         public IMongoCollection<Domain.Entities.Product> Products { get; }
-        public IMongoCollection<Domain.Entities.ProductImage> ProductImages { get; }
-        public IMongoCollection<Domain.Entities.SelectedOption> SelectedOptions { get; }
         public IMongoCollection<Domain.Entities.VariantCombination> VariantCombinations { get; }
         public IMongoCollection<Domain.Entities.Variation> Variations { get; }
     }
