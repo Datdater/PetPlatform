@@ -1,4 +1,12 @@
 
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using MongoDB.Driver;
+using Product.Application;
+using Product.Domain.Repository;
+using Product.Infrastructure.Data;
+using Product.Infrastructure.Repository;
+using System.Reflection;
+
 namespace Product.API
 {
     public class Program
@@ -6,9 +14,22 @@ namespace Product.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            // services.AddCors(options =>
+            // {
+            //     options.AddPolicy("CorsPolicy", policy =>
+            //     {
+            //         policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            //     });
+            // });
+            
             // Add services to the container.
-
+            
+            //DI
+            builder.Services.ApplicationService();
+            // Add this line to register ProductContext and IMongoDatabase in the DI container
+            builder.Services.AddSingleton<ProductContext>();
+            builder.Services.AddSingleton<IMongoDatabase>(sp => sp.GetRequiredService<ProductContext>()._database);
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

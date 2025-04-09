@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Misc;
+using Microsoft.Extensions.Configuration;
+using Product.Domain.Entities;
 namespace Product.Infrastructure.Data
 {
     public class ProductContext
     {
-        private readonly IMongoDatabase _database;
+        public IMongoDatabase _database;
 
-        public ProductContext(string connectionString, string databaseName)
+        public ProductContext(IConfiguration configuration)
         {
+            var connectionString = configuration.GetSection("DatabaseSettings:ConnectionString").Value;
+            var databaseName = configuration.GetSection("DatabaseSettings:DatabaseName").Value;
+
             var client = new MongoClient(connectionString);
             _database = client.GetDatabase(databaseName);
 
             Products = _database.GetCollection<Domain.Entities.Product>("Products");
-            VariantCombinations = _database.GetCollection<Domain.Entities.VariantCombination>("VariantCombinations");
+            Categories = _database.GetCollection<Category>("Categories");
         }
 
         public IMongoCollection<Domain.Entities.Product> Products { get; }
-        public IMongoCollection<Domain.Entities.VariantCombination> VariantCombinations { get; }
-        public IMongoCollection<Domain.Entities.Variation> Variations { get; }
+        public IMongoCollection<Category> Categories { get; }
     }
+
 }

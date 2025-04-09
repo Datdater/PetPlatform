@@ -32,9 +32,6 @@ namespace Product.Domain.Entities
         [BsonRepresentation(BsonType.String)]
         public string CategoryId { get; set; }
 
-        [BsonElement("basePrice")]
-        public decimal BasePrice { get; set; }
-
         [BsonElement("weight")]
         public decimal Weight { get; set; }
 

@@ -1,27 +1,18 @@
-﻿using MediatR;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
-using Product.Domain.Entities;
+﻿using Product.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Product.Application.Feature.Commands.CreateProduct
+namespace Product.Application.Feature.Products.DTOs
 {
-    public class CreateProductCommand : IRequest
+    public class ProductDetailDTO
     {
+        public string Id { get; set; }
         public string Name { get; set; }
-
-        public Guid BrandId { get; set; }
-
         public Guid StoreId { get; set; }
-
-        public Guid CategoryId { get; set; }
-
-        public decimal BasePrice { get; set; }
-
+        public string CategoryId { get; set; }
         public decimal Weight { get; set; }
 
         public decimal Length { get; set; }

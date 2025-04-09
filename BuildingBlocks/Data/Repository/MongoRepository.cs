@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Core;
 using BuildingBlocks.Data.Specifications;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,16 @@ namespace BuildingBlocks.Data.Repository
         public MongoRepository(IMongoDatabase database)
         {
             _database = database;
-            _collection = database.GetCollection<T>(typeof(T).Name.ToLowerInvariant());
+            _collection = database.GetCollection<T>(typeof(T).Name + "s");
         }
 
         public async Task<T> GetByIdAsync(string id)
         {
-            var filter = Builders<T>.Filter.Eq("_id", id);
+            if (!ObjectId.TryParse(id, out var objectId))
+            {
+                throw new ArgumentException("Invalid ID format", nameof(id));
+            }
+            var filter = Builders<T>.Filter.Eq("_id", objectId);
             return await _collection.Find(filter).FirstOrDefaultAsync();
         }
 

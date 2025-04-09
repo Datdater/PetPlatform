@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Feature\Commands\DeleteProduct\" />
-    <Folder Include="Feature\Commands\UpdateProduct\" />
-    <Folder Include="Feature\DTOs\" />
-    <Folder Include="Feature\Queries\GetAllProduct\" />
-    <Folder Include="Feature\Queries\GetProductDetail\" />
+    <Folder Include="Feature\Category\Commands\" />
+    <Folder Include="Feature\Category\DTOs\" />
+    <Folder Include="Feature\Category\Queries\" />
+    <Folder Include="Feature\Products\Commands\DeleteProduct\" />
+    <Folder Include="Feature\Products\Commands\UpdateProduct\" />
   </ItemGroup>
 
   <ItemGroup>
