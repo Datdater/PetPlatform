@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace BuildingBlocks.Data.Repository
 {
-    public class SqlRepository<T> : IRepository<T> where T : class
+    public class SqlRepository<T, TContext> : IRepository<T> where T : class, TContext where TContext : DbContext
     {
-        private readonly DbContext _context;
+        private readonly TContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public SqlRepository(DbContext context)
+        public SqlRepository(TContext context)
         {
             _context = context;
             _dbSet = context.Set<T>();
@@ -164,5 +164,24 @@ namespace BuildingBlocks.Data.Repository
             return query;
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task BeginTransaction()
+        {
+            await _context.Database.BeginTransactionAsync();
+        }
+
+        public Task CommitTransaction()
+        {
+            return _context.Database.CommitTransactionAsync();
+        }
+
+        public async Task RollbackTransaction()
+        {
+            await _context.Database.RollbackTransactionAsync();
+        }
     }
 }

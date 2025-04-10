@@ -46,14 +46,19 @@ namespace Product.Domain.Entities
 
         [BsonElement("views")]
         public int Views { get; set; } = 0;
+        [BsonElement("price")]
+        public decimal Price { get; set; }
+
+        [BsonElement("inventory")]
+        public int Inventory { get; set; }
 
         // Product variations (like color, size, etc.)
         [BsonElement("variations")]
-        public List<Variation> Variations { get; set; } = new List<Variation>();
+        public List<Variation> Variations { get; set; }
 
         // Actual product variants with combinations of options
         [BsonElement("variantCombinations")]
-        public List<VariantCombination> VariantCombinations { get; set; } = new List<VariantCombination>();
+        public List<VariantCombination> VariantCombinations { get; set; }
 
         // Product images
         [BsonElement("productImages")]

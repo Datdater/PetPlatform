@@ -8,22 +8,13 @@ using MongoDB.Driver;
 using MongoDB.Driver.Core.Misc;
 using Microsoft.Extensions.Configuration;
 using Product.Domain.Entities;
+using BuildingBlocks.Data.Repository;
 namespace Product.Infrastructure.Data
 {
-    public class ProductContext
+    public class ProductContext : MongoDBContext
     {
-        public IMongoDatabase _database;
-
-        public ProductContext(IConfiguration configuration)
+        public ProductContext(IConfiguration configuration) : base(configuration)
         {
-            var connectionString = configuration.GetSection("DatabaseSettings:ConnectionString").Value;
-            var databaseName = configuration.GetSection("DatabaseSettings:DatabaseName").Value;
-
-            var client = new MongoClient(connectionString);
-            _database = client.GetDatabase(databaseName);
-
-            Products = _database.GetCollection<Domain.Entities.Product>("Products");
-            Categories = _database.GetCollection<Category>("Categories");
         }
 
         public IMongoCollection<Domain.Entities.Product> Products { get; }

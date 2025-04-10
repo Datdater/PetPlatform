@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Data.Repository;
 using MongoDB.Driver;
+using Product.Domain.Repository;
 using Product.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,10 @@ using System.Threading.Tasks;
 
 namespace Product.Infrastructure.Repository
 {
-    public class ProductRepository : MongoRepository<Domain.Entities.Product>, Domain.Repository.IProductRepository
+    public class ProductRepository : MongoRepository<Domain.Entities.Product, ProductContext>, IProductRepository
     {
-        public ProductRepository(IMongoDatabase database) : base(database)
+        public ProductRepository(ProductContext mongoDBContext) : base(mongoDBContext)
         {
-            
         }
     }
 

@@ -11,15 +11,19 @@ using System.Threading.Tasks;
 
 namespace BuildingBlocks.Data.Repository
 {
-    public class MongoRepository<T> : IRepository<T> where T : class
+    public class MongoRepository<T, TDbContext> : IRepository<T>
+    where T : class
+    where TDbContext : MongoDBContext
     {
-        private readonly IMongoDatabase _database;
+        private readonly TDbContext _mongoDBContext;
         private readonly IMongoCollection<T> _collection;
+        private IClientSessionHandle _session;
 
-        public MongoRepository(IMongoDatabase database)
+
+        public MongoRepository(TDbContext mongoDBContext)
         {
-            _database = database;
-            _collection = database.GetCollection<T>(typeof(T).Name + "s");
+            _mongoDBContext = mongoDBContext;
+            _collection = _mongoDBContext.GetCollection<T>(typeof(T).Name.ToLower());
         }
 
         public async Task<T> GetByIdAsync(string id)
