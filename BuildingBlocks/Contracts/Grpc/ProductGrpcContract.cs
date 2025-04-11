@@ -10,14 +10,14 @@ namespace BuildingBlocks.Contracts.Grpc
 {
     public interface IProductGrpcService : IService<IProductGrpcService>
     {
-        UnaryResult<ProductResponse> GetProductAsync(string id, string? productVariationId = null);
+        UnaryResult<ProductResponse> GetProductByVariationIdAsync(string productVariationId);
     }
 
     [MessagePackObject]
     public record ProductResponse
     {
         [Key(0)]
-        public string Id { get; set; }
+        public string ProductVariationId { get; set; }
         [Key(1)]
         public string Name { get; set; }
         [Key(2)]

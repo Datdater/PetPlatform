@@ -16,12 +16,13 @@ namespace Product.Application.Feature.Products.Commands.CreateProduct
         private readonly IProductRepository _productRepository;
         //private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
-
-        public CreateProductHandler(IProductRepository productRepository, IMapper mapper)
+        private readonly IVariantProductRepository _variantProductRepository;
+        public CreateProductHandler(IProductRepository productRepository, IVariantProductRepository variantProductRepository , IMapper mapper)
         {
             _productRepository = productRepository;
             //_categoryRepository = categoryRepository;
             _mapper = mapper;
+            _variantProductRepository = variantProductRepository;
         }
         public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
@@ -33,6 +34,7 @@ namespace Product.Application.Feature.Products.Commands.CreateProduct
             //var store;
             var product = _mapper.Map<Domain.Entities.Product>(request);
             await _productRepository.AddAsync(product);
+            await _variantProductRepository.AddRangeAsync(request.VariantCombinations);
         }
     }
 }

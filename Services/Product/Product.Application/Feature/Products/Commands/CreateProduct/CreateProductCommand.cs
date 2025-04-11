@@ -23,8 +23,6 @@ namespace Product.Application.Feature.Products.Commands.CreateProduct
         public decimal Height { get; set; }
 
         public decimal Width { get; set; }
-        public decimal Price { get; set; }
-        public int Inventory { get; set; }
         public List<Variation> Variations { get; set; }
 
         public List<VariantCombination> VariantCombinations { get; set; }

@@ -15,43 +15,27 @@ namespace Product.Application.Feature.Products.Queries.GetProductById
     public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductResponseDTO>
     {
         private readonly IProductRepository _productRepository;
-        public GetProductByIdHandler(IProductRepository productRepository)
+        private readonly IVariantProductRepository _variantProductRepository;
+        public GetProductByIdHandler(IProductRepository productRepository, IVariantProductRepository variantProductRepository)
         {
+            _variantProductRepository = variantProductRepository;
             _productRepository = productRepository;
         }
         public async Task<ProductResponseDTO> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetByIdAsync(request.Id);
-            if (product == null)
+            var productVariation = await _variantProductRepository.GetByIdAsync(request.ProductVariationId);
+            if (productVariation == null)
             {
-                throw new NotFoundException(nameof(Product), request.Id);
+                throw new NotFoundException(nameof(VariantCombination), request.ProductVariationId);
             }
-            if (request.ProductVariationId != null)
+            return new ProductResponseDTO
             {
-                var productVariation = product.VariantCombinations.FirstOrDefault(x => x.Id == request.ProductVariationId);
-                if (productVariation == null)
-                {
-                    throw new NotFoundException(nameof(VariantCombination), request.ProductVariationId);
-                }
-                return new ProductResponseDTO
-                {
-                    Id = product.Id.ToString(),
-                    Name = product.Name,
-                    Price = productVariation.Price,
-                    Inventory = productVariation.Inventory
-                };
-            }
-            else
-            {
-                return new ProductResponseDTO
-                {
-                    Id = product.Id.ToString(),
-                    Name = product.Name,
-                    Price = product.Price,
-                    Inventory = product.Inventory
-                };
-            }
+                ProductVariationId = productVariation.Id.ToString(),
+                Price = productVariation.Price,
+                Inventory = productVariation.Inventory
+            };
+
         }
     }
-    
+
 }

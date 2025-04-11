@@ -11,8 +11,7 @@ namespace Product.Application.Feature.Products.Queries.GetProductById
 {
     public class GetProductByIdQuery : IRequest<ProductResponseDTO>
     {
-        public string Id { get; set; }
-        public string? ProductVariationId { get; set; }
+        public string ProductVariationId { get; set; }
     }
     
 }

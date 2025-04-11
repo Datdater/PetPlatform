@@ -46,11 +46,6 @@ namespace Product.Domain.Entities
 
         [BsonElement("views")]
         public int Views { get; set; } = 0;
-        [BsonElement("price")]
-        public decimal Price { get; set; }
-
-        [BsonElement("inventory")]
-        public int Inventory { get; set; }
 
         // Product variations (like color, size, etc.)
         [BsonElement("variations")]
@@ -96,8 +91,9 @@ namespace Product.Domain.Entities
 
     public class VariantCombination
     {
-        [BsonElement("id")]
-        public string Id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
 
         [BsonElement("options")]
         public List<SelectedOption> Options { get; set; } = new List<SelectedOption>();

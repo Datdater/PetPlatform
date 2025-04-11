@@ -1,5 +1,9 @@
 
+using BuildingBlocks.Domain.Event;
+using BuildingBlocks.MassTransit;
 using BuildingBlocks.Mediator;
+using MagicOnion;
+using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Order.API.Configuration;
 using Order.Application;
@@ -24,8 +28,29 @@ namespace Order.API
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
-
+            
             builder.Services.Configure<GrpcOptions>(options => configuration.GetSection("Grpc").Bind(options));
+            builder.Services.AddMassTransit(config =>
+            {
+                //Mark this as consumer
+                //config.AddConsumer<>();
+                //config.AddConsumer<BasketOrderingConsumerV2>();
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(configuration["EventBusSettings:HostAddress"]);
+                    //provide the queue name with consumer settings
+                    //cfg.ReceiveEndpoint(EventBusConstants.OrderQueue, c =>
+                    //{
+                    //    c.ConfigureConsumer<BasketOrderingConsumer>(ctx);
+                    //});
+                    ////V2 endpoint will pick items from here 
+                    //cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueueV2, c =>
+                    //{
+                    //    c.ConfigureConsumer<BasketOrderingConsumerV2>(ctx);
+                    //});
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

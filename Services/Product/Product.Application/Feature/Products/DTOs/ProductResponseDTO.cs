@@ -8,8 +8,7 @@ namespace Product.Application.Feature.Products.DTOs
 {
     public class ProductResponseDTO 
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public string ProductVariationId { get; set; }
         public decimal Price { get; set; }
         public int Inventory { get; set; }
     }

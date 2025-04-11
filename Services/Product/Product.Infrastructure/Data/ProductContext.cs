@@ -18,6 +18,7 @@ namespace Product.Infrastructure.Data
         }
 
         public IMongoCollection<Domain.Entities.Product> Products { get; }
+        public IMongoCollection<VariantCombination> ProductVariations { get; }
         public IMongoCollection<Category> Categories { get; }
     }
 

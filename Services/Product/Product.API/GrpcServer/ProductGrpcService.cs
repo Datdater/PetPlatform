@@ -22,13 +22,12 @@ namespace Order.Application.GrpcServer
         {
             _mediator = mediator;
         }
-        public async UnaryResult<ProductResponse> GetProductAsync(string id, string? productVariationId)
+        public async UnaryResult<ProductResponse> GetProductByVariationIdAsync(string productVariationId)
         {
-            var product = await _mediator.Send(new GetProductByIdQuery() { Id = id, ProductVariationId = productVariationId });
+            var product = await _mediator.Send(new GetProductByIdQuery() { ProductVariationId = productVariationId });
             ProductResponse productResponse = new ProductResponse()
             {
-                Id = product.Id,
-                Name = product.Name,
+                ProductVariationId = product.ProductVariationId,
                 Price = product.Price,
                 Inventory = product.Inventory
             };

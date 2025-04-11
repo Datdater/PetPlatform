@@ -1,6 +1,10 @@
-﻿using BuildingBlocks.Contracts.Grpc;
+﻿using BuildingBlocks.Contracts.EventBus.Message;
+using BuildingBlocks.Contracts.Grpc;
+using BuildingBlocks.Domain;
 using Grpc.Net.Client;
 using MagicOnion.Client;
+using MassTransit;
+using MassTransit.Transports;
 using MediatR;
 using Microsoft.Extensions.Options;
 using Order.API.Configuration;
@@ -19,9 +23,11 @@ namespace Order.Application.Feature.Orders.Commands.CreateOrder
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderDetailRepository _orderDetailRepository;
         private readonly IProductGrpcService _productGrpcService;
-        public CreateOrderHandler(IOrderRepository orderRepository, IOptions<GrpcOptions> grpcOptions,
-IOrderDetailRepository orderDetailRepository)
+        private readonly IPublishEndpoint _publishEndpoint;
+
+        public CreateOrderHandler(IOrderRepository orderRepository, IOptions<GrpcOptions> grpcOptions, IOrderDetailRepository orderDetailRepository, IPublishEndpoint publishEndpoint)
         {
+            _publishEndpoint = publishEndpoint;
             _orderRepository = orderRepository;
             _orderDetailRepository = orderDetailRepository;
             try
@@ -45,27 +51,27 @@ IOrderDetailRepository orderDetailRepository)
             var orderDetails = new List<OrderDetail>();
             foreach (var orderDetail in request.OrderDetails)
             {
-                var product = await _productGrpcService.GetProductAsync(orderDetail.ProductId, orderDetail.ProductVariationId);
-                if (product == null)
-                {
-                    throw new Exception($"Product with ID {orderDetail.ProductId} not found.");
-                }
+                var product = await _productGrpcService.GetProductByVariationIdAsync(orderDetail.ProductVariationId);
+                
                 orderDetails.Add(new OrderDetail
                 {
-                    ProductId = orderDetail.ProductId,
+                    ProductVariationId = orderDetail.ProductVariationId,
                     Quantity = orderDetail.Quantity,
                     Price = product.Price,
                 });
-                if (product.Inventory < orderDetail.Quantity)
-                {
-                    throw new Exception($"Not enough inventory for product with ID {orderDetail.ProductId}.");
-                }
                 order.TotalPrice += product.Price * orderDetail.Quantity;
             }
-
-            await _orderDetailRepository.AddRangeAsync(orderDetails);
-            order.OrderDetails = orderDetails;
-            await _orderRepository.AddAsync(order);
+            await _publishEndpoint.Publish(new OrderCreated()
+            {
+                OrderDetails = orderDetails.Select(x => new OrderDetailCreated
+                {
+                    ProductVariationId = x.ProductVariationId,
+                    Quantity = x.Quantity
+                }).ToList()
+            });
+            //await _orderDetailRepository.AddRangeAsync(orderDetails);
+            //order.OrderDetails = orderDetails;
+            //await _orderRepository.AddAsync(order);
         }
 
 

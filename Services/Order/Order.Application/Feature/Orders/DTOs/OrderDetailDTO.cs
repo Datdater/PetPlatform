@@ -8,10 +8,9 @@ namespace Order.Application.Feature.Orders.DTOs
 {
     public class OrderDetailDTO
     {
-        public string ProductId { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-        public string? ProductVariationId { get; set; }
+        public string ProductVariationId { get; set; }
 
     }
 }
